@@ -6,14 +6,17 @@ const Card = ({taskObj, index, deleteTask, updateListArray}) => {
 
     const colors = [
         {
+            name : "학업",
             primaryColor : "#5D93E1",
             secondaryColor : "#ECF3FC"
         },
         {
+            name : "휴식",
             primaryColor : "#F9D288",
             secondaryColor : "#FEFAF1"
         },
         {
+            name : "업무",
             primaryColor : "#5DC250",
             secondaryColor : "#F2FAF1"
         },
@@ -39,7 +42,7 @@ const Card = ({taskObj, index, deleteTask, updateListArray}) => {
         deleteTask(index)
     }
 
-    const colorIndex = typeof taskObj.Index === 'number' ? taskObj.Index % 5 : 0;
+    const colorIndex = colors.findIndex(color => color.name === taskObj.Category);
 
     return (
         <div class = "card-wrapper mr-5">

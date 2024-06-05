@@ -1,19 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 
 const EditTaskPopup = ({ modal, toggle, updateTask, taskObj }) => {
     const [taskName, setTaskName] = useState('');
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
-    const [index, setIndex] = useState('');
-
-    const getAsciiSum = (s) => {
-        let sum = 0;
-        for (let i = 0; i < s.length; i++) {
-            sum += s.charCodeAt(i);
-        }
-        return sum;
-    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -21,7 +12,6 @@ const EditTaskPopup = ({ modal, toggle, updateTask, taskObj }) => {
             setTaskName(value);
         } else if (name === "category") {
             setCategory(value);
-            setIndex(getAsciiSum(value));
         } else {
             setDescription(value);
         }
@@ -31,7 +21,6 @@ const EditTaskPopup = ({ modal, toggle, updateTask, taskObj }) => {
         setTaskName(taskObj.Name);
         setCategory(taskObj.Category);
         setDescription(taskObj.Description);
-        setIndex(taskObj.Index);
     }, [taskObj]);
 
     const handleUpdate = (e) => {
@@ -40,7 +29,6 @@ const EditTaskPopup = ({ modal, toggle, updateTask, taskObj }) => {
             Name: taskName,
             Category: category,
             Description: description,
-            Index: index
         };
         updateTask(tempObj);
     };
@@ -61,15 +49,19 @@ const EditTaskPopup = ({ modal, toggle, updateTask, taskObj }) => {
                     name="taskName"
                     margin="dense"
                 />
-                <TextField
-                    label="Category"
-                    variant="outlined"
-                    fullWidth
-                    value={category}
-                    onChange={handleChange}
-                    name="category"
-                    margin="dense"
-                />
+                <FormControl fullWidth margin="dense">
+                    <InputLabel>Category</InputLabel>
+                    <Select
+                        label="Category"
+                        value={category}
+                        onChange={handleChange}
+                        name="category"
+                    >
+                        <MenuItem value="학업">학업</MenuItem>
+                        <MenuItem value="휴식">휴식</MenuItem>
+                        <MenuItem value="업무">업무</MenuItem>
+                    </Select>
+                </FormControl>
                 <TextField
                     label="Description"
                     variant="outlined"
